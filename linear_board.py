@@ -1,4 +1,5 @@
 from settings import BOARD_LENGTH, VICTORY_STRIKE
+from list_utils import find_streak
 
 class linearBoard():
     """
@@ -21,18 +22,9 @@ class linearBoard():
     
     def is_victory(self, player):
         """ 
-        Comprueba si un jugador concreto ha ganado 
+        Comprueba si un jugador concreto tiene más de VICTORY_STRIKES seguidas 
         """
-        strike = 0
-        i = 0
-        while strike < VICTORY_STRIKE and i < BOARD_LENGTH:
-            if self._column[i] == player:
-                strike +=1
-            else:
-                strike = 0
-            i += 1
-
-        return strike >= VICTORY_STRIKE
+        return find_streak(self._column, player, VICTORY_STRIKE)
         
     def add(self, move):
         """
