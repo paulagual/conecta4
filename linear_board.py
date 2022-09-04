@@ -38,7 +38,6 @@ class linearBoard():
         """ 
         Comprueba si ha habido un empate, es decir no hay victoria ni de 'x' ni de 'o'
         """
-        
         return (self.is_victory(player1) == False) and (self.is_victory(player2) == False) 
 
     def __str__(self):
