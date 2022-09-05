@@ -1,13 +1,25 @@
 from settings import BOARD_LENGTH, VICTORY_STRIKE
 from list_utils import find_streak
 
-class linearBoard():
+class LinearBoard():
     """
     Clase que representa un tablero de una sola columna
     x un jugador
     0 otro jugador
     None un espacio vacío
     """
+    @classmethod
+    def fromList(cls, list):
+        #comprueba si es una lista del tamaño correcto y si no lance una excepción
+        # if len(list) != BOARD_LENGTH:
+        #     raise("Error in the lenght of the list")
+        
+        board = cls()
+        board._column = list
+        return board
+        
+        #to do: que añada él solo los None que falten en la lista
+    
     def __init__(self):
         """ 
         Una lista de None 
@@ -40,8 +52,7 @@ class linearBoard():
         """
         return (self.is_victory(player1) == False) and (self.is_victory(player2) == False) 
 
-    def __str__(self):
-        return "Linear Board"
+    # dunders
 
     def __repr__(self):
-        return self.__str__()
+        return f'{self.__class__}:{self._column}'  

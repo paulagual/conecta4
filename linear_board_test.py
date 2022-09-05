@@ -3,19 +3,19 @@ from linear_board import *
 from settings import BOARD_LENGTH, VICTORY_STRIKE
 
 def test_empty_board():
-    empty = linearBoard()
+    empty = LinearBoard()
     assert empty != None
     assert empty.is_full() == False
     assert empty.is_victory('x') == False
 
 def test_add():
-    b = linearBoard()
+    b = LinearBoard()
     for i in range(BOARD_LENGTH):
         b.add('x')
     assert b.is_full() == True
 
 def test_add_to_full():
-    full = linearBoard()
+    full = LinearBoard()
 
     for i in range(BOARD_LENGTH):
         full.add('x')
@@ -24,10 +24,8 @@ def test_add_to_full():
 
     assert full.is_full() == True
     
-
-
 def test_victory():
-    b = linearBoard()
+    b = LinearBoard()
     for i in range(VICTORY_STRIKE):
         b.add('x')
 
@@ -35,7 +33,7 @@ def test_victory():
     assert b.is_victory('x') == True
 
 def test_tie():
-    b = linearBoard()
+    b = LinearBoard()
 
     b.add('o')
     b.add('x')   
