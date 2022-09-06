@@ -21,7 +21,7 @@ def test_vertical_victory():
 def test_horizontal_victory():
     horizontal = SquareBoard.fromList([['x', None, None, None,],
                                     ['x', None, None, None,],
-                                    ['x', 'o', None, None,],
+                                    ['o', 'o', None, None,],
                                     ['x', 'o', None, None,],
                                     ['x', 'o', None, None,]])
     assert horizontal.is_victory('o')

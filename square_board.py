@@ -1,5 +1,6 @@
 from settings import BOARD_LENGTH, VICTORY_STRIKE
 from linear_board import LinearBoard
+from list_utils import *
 
 class SquareBoard():
     """
@@ -17,6 +18,12 @@ class SquareBoard():
     def __init__(self):
         self._columns = [LinearBoard() for i in range(BOARD_LENGTH)] 
     
+    def as_matrix(self):
+        """
+        Devuelve una representación de self en formato de matriz, lista de listas
+        """
+        return list(map(lambda x: x._column, self._columns))
+
     def is_full(self):
         """ 
         Comprueba si el tablero está lleno.
@@ -56,7 +63,15 @@ class SquareBoard():
         """
         Comprueba si hay una victoria horizontal en el tablero
         """
-        return False
+        #transpongo la representacion del board
+        transposed = transpose(self.as_matrix())
+
+        #creo un tablero virtual para no modificar el real
+        tmp = SquareBoard.fromList(transposed)
+
+        #busco una victoria vertical
+        
+        return tmp._any_vertical_victory(player)
 
     def _any_rising_victory(self, player):
         """

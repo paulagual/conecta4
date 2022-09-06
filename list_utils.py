@@ -44,3 +44,20 @@ def find_streak(list, needle, streak):
     else: 
         return False
 
+def first_elements(list_of_lists):
+    """
+    Transpone una matriz (lista de listas), y devuelve la primera columna de la matriz transpuesta.
+    """
+    return nth_elements(list_of_lists, 0)
+
+def nth_elements(list_of_lists, n):
+    """
+    Transpone una matriz (lista de listas), y devuelve la enesima columna de la matriz transpuesta.
+    """
+    return [ls[n] for ls in list_of_lists]
+
+def transpose(matrix):
+    """
+    Transpone una matriz (lista de listas), y devuelve la matriz transpuesta.
+    """    
+    return [nth_elements(matrix, i) for i in range(len(matrix[0]))]

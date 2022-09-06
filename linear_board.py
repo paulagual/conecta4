@@ -9,13 +9,13 @@ class LinearBoard():
     None un espacio vacío
     """
     @classmethod
-    def fromList(cls, list):
+    def fromList(cls, ls):
         #comprueba si es una lista del tamaño correcto y si no lance una excepción
         # if len(list) != BOARD_LENGTH:
         #     raise("Error in the lenght of the list")
         
         board = cls()
-        board._column = list
+        board._column = ls
         return board
         
         #to do: que añada él solo los None que falten en la lista
