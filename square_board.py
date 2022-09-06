@@ -29,10 +29,6 @@ class SquareBoard():
         Comprueba si el tablero está lleno.
         True si todos los linearBoards están llenos
         """  
-        # for lb in self._columns:
-        #     if not lb.is_full():
-        #         return False
-        # return True
         result = True
         for lb in self._columns:
             result = result and lb.is_full()
@@ -50,10 +46,6 @@ class SquareBoard():
         """
         Comprueba si hay una victoria vertical en el tablero
         """
-        # for lb in self._columns:
-        #     if lb.is_victory(player):
-        #         return True
-        # return False
         result = False
         for lb in self._columns:
             result = result or lb.is_victory(player)
@@ -70,21 +62,24 @@ class SquareBoard():
         tmp = SquareBoard.fromList(transposed)
 
         #busco una victoria vertical
-        
         return tmp._any_vertical_victory(player)
 
     def _any_rising_victory(self, player):
         """
         Comprueba si hay una victoria diagonal ascendente en el tablero
         """
-        return False
+        m = reverse_matrix(self.as_matrix())
+        tmp = SquareBoard.fromList(m)
+        return tmp._any_sinking_victory(player)
 
     def _any_sinking_victory(self, player):
         """
         Comprueba si hay una victoria diagonal descendente en el tablero
         """
-        return False
-    
+        m = self.as_matrix()
+        d = displace_matrix(m)
+        tmp = SquareBoard.fromList(d)
+        return tmp._any_horizontal_victory(player)
 
     # dunders
 
