@@ -1,5 +1,5 @@
 from settings import BOARD_LENGTH, VICTORY_STRIKE
-from linear_board import LinearBoard
+from linear_board import *
 from list_utils import *
 
 class SquareBoard():
@@ -23,6 +23,12 @@ class SquareBoard():
         Devuelve una representación de self en formato de matriz, lista de listas
         """
         return list(map(lambda x: x._column, self._columns))
+
+    def add(self, player, column):
+        """
+        Juega una ficha en una columna
+        """
+        self._columns[column].add(player)
 
     def is_full(self):
         """ 
@@ -88,3 +94,15 @@ class SquareBoard():
 
     def __len__(self):
         return len(self._columns)
+
+    def __eq__(self, other):
+         #si son de clases distintas, son distintos
+        if not isinstance(other, self.__class__):
+            return False
+        #si son de la misma clase, compara sus elementos   
+        else:
+            return self._columns == other._columns
+
+    def __hash__(self):
+        return hash(self._columns)
+        

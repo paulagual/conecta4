@@ -44,3 +44,18 @@ def test_rising_victory():
                                     ['x', 'o', None, None,]])
     assert rising.is_victory('x')
     assert rising.is_victory('o') == False
+
+def test_eq():
+    a = SquareBoard.fromList([['x', 'o', None, None,],
+                              ['o', 'x', None, None,],
+                              ['x', 'o', 'x', 'o',],
+                              ['x', 'x', 'x', 'o',],
+                              ['x', 'o', None, None,]])
+
+    b = SquareBoard.fromList([['x', 'o', None, None,],
+                              ['o', 'x', None, None,],
+                              ['x', 'o', 'x', 'o',],
+                              ['x', 'x', 'x', 'o',],
+                              ['x', 'o', None, None,]])
+
+    assert a == b

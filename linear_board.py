@@ -56,3 +56,14 @@ class LinearBoard():
 
     def __repr__(self):
         return f'{self.__class__}:{self._column}'  
+
+    def __eq__(self, other):
+         #si son de clases distintas, son distintos
+        if not isinstance(other, self.__class__):
+            return False
+        #si son de la misma clase, compara sus elementos   
+        else:
+            return self._column == other._column
+
+    def __hash__(self):
+        return hash(self._column)

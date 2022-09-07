@@ -12,6 +12,8 @@ class ColumnRecommendation():
         self.index = index
         self.classification = classification
 
+    # dunders
+
     def __eq__(self, other):
         #si son de clases distintas, son distintos
         if not isinstance(other, self.__class__):
