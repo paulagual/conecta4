@@ -42,3 +42,17 @@ def test_tie():
 
     assert b.is_tie('x','o')
 
+def test_eq():
+    a = LinearBoard()
+    b = LinearBoard()
+
+    a.add('o')
+    a.add('x')   
+    a.add('x')   
+
+    b.add('o')
+    b.add('x')   
+    b.add('x')   
+
+
+    assert a == b
