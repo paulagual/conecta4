@@ -32,11 +32,11 @@ class LinearBoard():
         """
         return self._column[-1] != None
     
-    def is_victory(self, player):
+    def is_victory(self, char):
         """ 
         Comprueba si un jugador concreto tiene más de VICTORY_STRIKES seguidas 
         """
-        return find_streak(self._column, player, VICTORY_STRIKE)
+        return find_streak(self._column, char, VICTORY_STRIKE)
         
     def add(self, move):
         """
@@ -46,11 +46,11 @@ class LinearBoard():
             i = self._column.index(None)
             self._column[i] = move
 
-    def is_tie(self, player1, player2):
+    def is_tie(self, char1, char2):
         """ 
         Comprueba si ha habido un empate, es decir no hay victoria ni de 'x' ni de 'o'
         """
-        return (self.is_victory(player1) == False) and (self.is_victory(player2) == False) 
+        return (self.is_victory(char1) == False) and (self.is_victory(char2) == False) 
 
     # dunders
 

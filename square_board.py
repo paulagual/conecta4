@@ -24,11 +24,11 @@ class SquareBoard():
         """
         return list(map(lambda x: x._column, self._columns))
 
-    def add(self, player, column):
+    def add(self, char, column):
         """
         Juega una ficha en una columna
         """
-        self._columns[column].add(player)
+        self._columns[column].add(char)
 
     def is_full(self):
         """ 
@@ -41,11 +41,11 @@ class SquareBoard():
         return result
         
 
-    def is_victory(self, player):
+    def is_victory(self, char):
         """
         Detecta los 4 tipos de victoria: vertical, horizontal, diagonal ascendente y diagola descendente
         """
-        return self._any_vertical_victory(player) or self._any_horizontal_victory(player) or self._any_rising_victory(player) or self._any_sinking_victory(player)
+        return self._any_vertical_victory(char) or self._any_horizontal_victory(char) or self._any_rising_victory(char) or self._any_sinking_victory(char)
 
     
     def _any_vertical_victory(self, player):
