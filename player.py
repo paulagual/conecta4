@@ -4,10 +4,21 @@ from linear_board import *
 
 class Player():
     
-    def __init__(self, name, player, oracle = BaseOracle()):
+    def __init__(self, name, player = None, opponent = None, oracle = BaseOracle()):
         self.name = name
         self.player = player
         self._oracle = oracle
+        self.opponent = opponent
+
+    @property
+    def opponent(self):
+        return self._opponent
+    
+    @opponent.setter
+    def opponent(self, other):
+        if other != None:
+            self._opponent = other
+            other._opponent = self
 
     def play(self, board):
         """
@@ -49,7 +60,7 @@ class Player():
 
 class HumanPlayer(Player):
 
-    def __init__(self, name, player):
+    def __init__(self, name, player = None):
         super().__init__(name, player)
 
     def _ask_oracle(self, board):
