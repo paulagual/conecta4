@@ -49,7 +49,7 @@ class Player():
         """
         #jugar en la columna 
         board.add(self.char, position)
-        
+
         #guardo la última jugada
         self.last_move = position
         
@@ -72,7 +72,7 @@ class HumanPlayer(Player):
         """
         while True:
             #pedir columna al humano
-            col = input('Elige una columna en la que jugar (or h for help): ')
+            col = input('Elige una columna en la que jugar: ')
     
             #verificar que es una respuesta válida
             if _is_int(col) and _is_within_column_range(board, int(col)) and _is_non_full_column(board, int(col)):

@@ -94,7 +94,7 @@ class Game():
     def display_result(self):
         winner = self.match.get_winner(self.board)
         if winner != None:
-            print(f"/n El ganador es el {winner.name} que juega con la ficha {winner.char}")
+            print(f"El ganador es el {winner.name} que juega con la ficha {winner.char}")
         else:
             print(f"/n Hay un empate")
 
@@ -145,6 +145,6 @@ class Game():
         else:
             #jugador 1 robotico, jugador 2 humano
             player1 = Player('T-X')
-            player2 = HumanPlayer(name = input("/n ¿Cuál es tu nombre? "))
+            player2 = HumanPlayer(name = input("¿Cuál es tu nombre? "))
 
         return Match(player1, player2)
