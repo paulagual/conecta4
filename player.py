@@ -4,11 +4,12 @@ from linear_board import *
 
 class Player():
     
-    def __init__(self, name, player = None, opponent = None, oracle = BaseOracle()):
+    def __init__(self, name, char = None, opponent = None, oracle = BaseOracle()):
         self.name = name
-        self.player = player
+        self.char = char
         self._oracle = oracle
         self.opponent = opponent
+        self.last_move = None
 
     @property
     def opponent(self):
@@ -16,8 +17,8 @@ class Player():
     
     @opponent.setter
     def opponent(self, other):
+        self._opponent = other
         if other != None:
-            self._opponent = other
             other._opponent = self
 
     def play(self, board):
@@ -42,14 +43,17 @@ class Player():
 
         return (best, recommendations)
 
-    def play_on(self, board, index):
+    def play_on(self, board, position):
         """
         Juega en la posición indicada
         """
         #jugar en la columna 
-        board.add(self.player, index)
-
-        return board
+        board.add(self.char, position)
+        print(self.char)
+        print(position)
+        #guardo la última jugada
+        self.last_move = position
+        
 
     def _choose(self, recommedations):
         #quitamos las columnas no válidas

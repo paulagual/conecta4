@@ -30,17 +30,17 @@ class BaseOracle():
     def __init__(self):
         pass
     
-    def get_recommedation(self, board, player):
+    def get_recommedation(self, board, char):
         """
         Devuelve una lista de ColumnRecommedations
         """
         recommedation = []
         for i in range(len(board)):
-            recommedation.append(self.get_column_recommendation(board, i, player))
+            recommedation.append(self.get_column_recommendation(board, i, char))
 
         return recommedation
 
-    def get_column_recommendation(self, board, index, player):
+    def get_column_recommendation(self, board, index, char):
         """
         Devuelve la clasificacion para una columna entre FULL y MAYE y devuelve una ColumnRecommendation
         """
