@@ -49,8 +49,7 @@ class Player():
         """
         #jugar en la columna 
         board.add(self.char, position)
-        print(self.char)
-        print(position)
+        
         #guardo la última jugada
         self.last_move = position
         

@@ -48,16 +48,16 @@ class SquareBoard():
         return self._any_vertical_victory(char) or self._any_horizontal_victory(char) or self._any_rising_victory(char) or self._any_sinking_victory(char)
 
     
-    def _any_vertical_victory(self, player):
+    def _any_vertical_victory(self, char):
         """
         Comprueba si hay una victoria vertical en el tablero
         """
         result = False
         for lb in self._columns:
-            result = result or lb.is_victory(player)
+            result = result or lb.is_victory(char)
         return result
 
-    def _any_horizontal_victory(self, player):
+    def _any_horizontal_victory(self, char):
         """
         Comprueba si hay una victoria horizontal en el tablero
         """
@@ -68,24 +68,24 @@ class SquareBoard():
         tmp = SquareBoard.fromList(transposed)
 
         #busco una victoria vertical
-        return tmp._any_vertical_victory(player)
+        return tmp._any_vertical_victory(char)
 
-    def _any_rising_victory(self, player):
+    def _any_rising_victory(self, char):
         """
         Comprueba si hay una victoria diagonal ascendente en el tablero
         """
         m = reverse_matrix(self.as_matrix())
         tmp = SquareBoard.fromList(m)
-        return tmp._any_sinking_victory(player)
+        return tmp._any_sinking_victory(char)
 
-    def _any_sinking_victory(self, player):
+    def _any_sinking_victory(self, char):
         """
         Comprueba si hay una victoria diagonal descendente en el tablero
         """
         m = self.as_matrix()
         d = displace_matrix(m)
         tmp = SquareBoard.fromList(d)
-        return tmp._any_horizontal_victory(player)
+        return tmp._any_horizontal_victory(char)
 
     # dunders
 
