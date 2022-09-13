@@ -1,6 +1,7 @@
 import pytest
 
 from list_utils import *
+from oracle import ColumnRecommendation, ColumnClassification
 
 def test_find_one():
     needle = 1
@@ -92,3 +93,25 @@ def test_reverse_list():
 def test_reverse_matrix():
     assert reverse_matrix([]) == []
     assert reverse_matrix([[0,1,2,3],[0,1,2,3]]) == [[3,2,1,0],[3,2,1,0]]
+
+def test_all_same():
+
+    ls = [1,'w', [1,2], {'x':1, 'o':2}, 5]
+
+
+
+    assert all_same([])
+    assert all_same([None, None]) 
+    assert all_same([1, 1, 1]) 
+    assert all_same([1, 2, 1]) == False
+    assert all_same([2, 2, 1]) == False
+    assert all_same([1, 2, 2]) == False
+    assert all_same(['x', 'x', 'x']) 
+    assert all_same([ls, ls, ls]) 
+    assert all_same([ls, ls, 'ls']) == False
+    assert all_same([[],[],[]])
+    assert all_same([ColumnRecommendation(1, ColumnClassification.MAYBE), 
+                    ColumnRecommendation(0, ColumnClassification.MAYBE)])
+
+    assert all_same([ColumnRecommendation(0, ColumnClassification.WIN), 
+                    ColumnRecommendation(0, ColumnClassification.MAYBE)]) == False

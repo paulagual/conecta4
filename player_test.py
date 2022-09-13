@@ -5,28 +5,30 @@ from linear_board import *
 from square_board import *
 from player import Player, _is_within_column_range, _is_int, _is_non_full_column
 
-def test_play():    
-    """
-    Test para comprobar que juega en la primera columna disponible
-    """
+#esto ha cambiado y ya no se da, ya no jugamos en la primera opción disponible
 
-    before = SquareBoard.fromList([['x', 'o', None, None,],
-                              ['o', 'x', None, None,],
-                              ['x', 'o', 'x', 'o',],
-                              ['x', 'x', 'x', 'o',],
-                              ['x', 'o', None, None,]])
+# def test_play():    
+#     """
+#     Test para comprobar que juega en la primera columna disponible
+#     """
 
-    after = SquareBoard.fromList([['x', 'o', 'x', None,],
-                              ['o', 'x', None, None,],
-                              ['x', 'o', 'x', 'o',],
-                              ['x', 'x', 'x', 'o',],
-                              ['x', 'o', None, None,]])
+#     before = SquareBoard.fromList([['x', 'o', None, None,],
+#                               ['o', 'x', None, None,],
+#                               ['x', 'o', 'x', 'o',],
+#                               ['x', 'x', 'x', 'o',],
+#                               ['x', 'o', None, None,]])
+
+#     after = SquareBoard.fromList([['x', 'o', 'x', None,],
+#                               ['o', 'x', None, None,],
+#                               ['x', 'o', 'x', 'o',],
+#                               ['x', 'x', 'x', 'o',],
+#                               ['x', 'o', None, None,]])
     
-    player = Player('Chip', 'x', oracle=BaseOracle())
+#     player = Player('Chip', 'x', oracle=BaseOracle())
 
-    player.play(before)
+#     player.play(before)
 
-    assert before == after
+#     assert before == after
 
 def test_valid_column():
     board = SquareBoard.fromList([['x', None, None, None,],

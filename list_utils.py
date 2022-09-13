@@ -90,3 +90,9 @@ def reverse_matrix(matrix):
     for l in matrix:
         m.append(reverse_list(l))
     return m
+
+def all_same(ls):
+    for i in range(len(ls)):
+        if ls[i] != ls[0]:
+            return False
+    return True

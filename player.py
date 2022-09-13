@@ -1,6 +1,8 @@
 from oracle import *
 from square_board import *
 from linear_board import *
+from list_utils import all_same
+import random
 
 class Player():
     
@@ -58,8 +60,15 @@ class Player():
         #quitamos las columnas no válidas
         posible = list(filter(lambda x: x.classification != ColumnClassification.FULL, recommedations))
 
-        #elegimos la primera
-        return posible[0]
+        #ordenar por el valor de clasificación, primero las WIN y luego las MAYBE
+        valid = sorted(posible, key=lambda x: x.classification.value, reverse = True)
+
+        #si, todas son iguales, elegimos al azar entre las posibles
+        if all_same(valid):
+            return random.choice(valid)
+            #si no lo son, cojo la primera que será la mejor
+        else:
+            return valid[0]
 
 class HumanPlayer(Player):
 
