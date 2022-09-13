@@ -4,10 +4,10 @@ from enum import Enum, auto
 from settings import BOARD_LENGTH
 
 class ColumnClassification(Enum):
-        FULL    =  -1 #imposible de jugar
-        LOSE   =   1 #derrota casi asegurada
-        MAYBE   =  10 #puedes jugar, pero es indeseable
-        WIN     = 100 #la mejor opción, gano seguro
+    FULL    =  -1 #imposible de jugar
+    LOSE    =   1 #derrota casi asegurada
+    MAYBE   =  10 #puedes jugar, pero es indeseable
+    WIN     = 100 #la mejor opción, gano seguro  
 
 class ColumnRecommendation():
     
@@ -16,6 +16,9 @@ class ColumnRecommendation():
         self.classification = classification
 
     # dunders
+
+    def __repr__(self):
+        return f'{self.classification.name.lower()}' 
 
     def __eq__(self, other):
         #si son de clases distintas, son distintos
@@ -67,10 +70,10 @@ class SmartOracle(BaseOracle):
         if recommendation.classification == ColumnClassification.MAYBE:
             #busca si hay una jugada ganadora para recomendarla
             if self._is_winning_move(board, index, player):
-                recommendation.classification = ColumnClassificatio.WIN
+                recommendation.classification = ColumnClassification.WIN
             #si no, busca si hay una jugada perdedora para evitarla
             elif self._is_losing_move(board, index, player):
-                recommendation.classification = ColumnClassificatio.LOSE
+                recommendation.classification = ColumnClassification.LOSE
 
         return recommendation
 
@@ -99,9 +102,9 @@ class SmartOracle(BaseOracle):
         tmp = self._play_on_tmp_board(board, index, player)
         
         #comprobamos si hay una victoria en el tmp board
-        return tmp.is_victory(player)
+        return tmp.is_victory(player.char)
 
-    def _play_on_tmp_board(self, board, index, char):
+    def _play_on_tmp_board(self, board, index, player):
         """ 
         Juega en un board temporal
         """
@@ -109,7 +112,7 @@ class SmartOracle(BaseOracle):
         tmp_board = deepcopy(board)
 
         #jugamos en el board temporal
-        tmp_board.add(char, index)
+        tmp_board.add(player.char, index)
 
         #devuelve el tmp board con el movimiento añadido
         return tmp_board

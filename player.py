@@ -1,3 +1,5 @@
+from beautifultable import BeautifulTable
+
 from oracle import *
 from square_board import *
 from linear_board import *
@@ -81,8 +83,27 @@ class HumanPlayer(Player):
         """
         while True:
             #pedir columna al humano
-            col = input('Elige una columna en la que jugar: ')
-    
+            col = input('Elige una columna en la que jugar (o h para pedir ayuda): ')
+
+            #si pide ayuda darsela
+            if col.lower() == "h":
+                opponent = self.opponent
+
+                #create a beautiful table
+                bt_rec = BeautifulTable()
+
+                #añadir las recomendaciones
+                for i in range(BOARD_LENGTH):
+                    recomendation = opponent._oracle._get_column_recommendation(board, i, opponent.opponent)
+                    bt_rec.columns.append([recomendation])
+                
+                #poner el header
+                bt_rec.columns.header = [str(i) for i in range(BOARD_LENGTH)]    
+
+                #imprimirla
+                print(bt_rec)
+
+
             #verificar que es una respuesta válida
             if _is_int(col) and _is_within_column_range(board, int(col)) and _is_non_full_column(board, int(col)):
             #si no lo es, jugamos la jugada
