@@ -61,6 +61,8 @@ def test_is_winning_move():
 def test_is_losing_move():
     loser = Player('Xavier', 'x')
     winner = Player('Otoo', 'o')
+    loser.opponent = winner
+    winner.opponent = loser
 
     empty = SquareBoard()
      
@@ -80,4 +82,4 @@ def test_is_losing_move():
     for i in range(0,BOARD_LENGTH):
         assert oracle._is_losing_move(board, i, winner) == False
 
-    assert oracle._is_loosing_move(board, 1, loser)     
+    assert oracle._is_losing_move(board, 1, loser)     
