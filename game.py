@@ -7,7 +7,7 @@ from match import Match
 from player import Player, HumanPlayer
 from square_board import SquareBoard
 from list_utils import reverse_matrix
-from oracle import SmartOracle, BaseOracle
+from oracle import SmartOracle, BaseOracle, MemoizingOracle
 from settings import BOARD_LENGTH
 
 class RoundType(Enum):
@@ -181,7 +181,7 @@ class Game():
         """
         _levels = {DifficultyLevel.EASY: BaseOracle(),
                    DifficultyLevel.MEDIUM: SmartOracle(),
-                   DifficultyLevel.HARD: SmartOracle()}
+                   DifficultyLevel.HARD: MemoizingOracle()}
 
         if self.round_type == RoundType.COMPUTER_VS_COMPUTER:
             #ambos jugadores roboticos
