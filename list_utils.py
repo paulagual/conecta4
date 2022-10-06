@@ -92,7 +92,42 @@ def reverse_matrix(matrix):
     return m
 
 def all_same(ls):
+    is_same = True
     for i in range(len(ls)):
         if ls[i] != ls[0]:
-            return False
-    return True
+            is_same = False
+            break
+    return is_same
+
+def collapse_list(ls, empty='.'):
+    """
+    Concatena todas las cadenas de la lista en una sola cadena
+    """
+    string = ''
+    for item in ls:
+        if item == None:
+            string = string + empty
+        else:
+            string = string + item
+    return string
+
+def collapse_matrix(matrix, empty='.', separator='|'):
+    """ 
+    Contatena todas las listas en una sola cadena separada por |
+    """
+    string = ''
+    for ls in matrix:
+        string = string + collapse_list(ls, empty) + separator
+    return string[:-1]
+
+def explode_string(string):
+    ls = []
+    for char in string:
+        ls.append(char)
+    return ls
+
+def explode_list_of_strings(list_of_strings):
+    matrix = []
+    for string in list_of_strings:
+        matrix.append(explode_string(string))
+    return matrix

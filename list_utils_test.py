@@ -115,3 +115,23 @@ def test_all_same():
 
     assert all_same([ColumnRecommendation(0, ColumnClassification.WIN), 
                     ColumnRecommendation(0, ColumnClassification.MAYBE)]) == False
+
+def test_collapse_list():
+    assert collapse_list([]) == ''
+    assert collapse_list(['o','x','x','o']) == 'oxxo'
+    assert collapse_list(['o','x', None, None]) == 'ox..'
+
+def test_collapse_matrix():
+    assert collapse_matrix([]) == ''
+    assert collapse_matrix([['o','x','x'],
+                            ['o',None,None],
+                            ['x','x',None]]) == 'oxx|o..|xx.'
+
+def test_explode_string():
+    assert explode_string('Han') == ['H','a','n']
+    assert explode_string('') == []
+
+def test_explode_list_of_strings():
+    assert explode_list_of_strings(['Han','Solo']) == [['H','a','n'],['S','o','l','o']]
+    assert explode_list_of_strings(['','','']) == [[],[],[]]
+    assert explode_list_of_strings([]) == []
