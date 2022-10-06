@@ -1,10 +1,12 @@
 from beautifultable import BeautifulTable
 
+from move import Move
 from oracle import *
 from square_board import *
 from linear_board import *
 from list_utils import all_same
 import random
+
 
 class Player():
     
@@ -33,21 +35,27 @@ class Player():
         (best, recommendations) = self._ask_oracle(board)
 
         # Jugar la mejor jugada
-        self.play_on(board, best.index)
+        self.play_on(board, best.index, recommendations)
 
     def _ask_oracle(self, board):
         """
         Pregunta al oráculo y devuelve la mejor opción y las recomendaciones
         """
         #obtener recomendaciones
-        recommendations = self._oracle.get_recommedation(board, self)
+        recommendations = self._oracle.get_recommendation(board, self)
        
         #seleccionar la mejor recomendacion
         best = self._choose(recommendations)
 
         return (best, recommendations)
 
-    def play_on(self, board, position):
+    def on_win(self):
+        pass
+
+    def on_loose(self):
+        pass
+
+    def play_on(self, board, position, recommendations):
         """
         Juega en la posición indicada
         """
@@ -55,12 +63,12 @@ class Player():
         board.add(self.char, position)
 
         #guardo la última jugada
-        self.last_move = position
+        self.last_move = Move(position, board.as_code(), recommendations, self)
         
 
-    def _choose(self, recommedations):
+    def _choose(self, recommendations):
         #quitamos las columnas no válidas
-        posible = list(filter(lambda x: x.classification != ColumnClassification.FULL, recommedations))
+        posible = list(filter(lambda x: x.classification != ColumnClassification.FULL, recommendations))
 
         #ordenar por el valor de clasificación, primero las WIN y luego las MAYBE
         valid = sorted(posible, key=lambda x: x.classification.value, reverse = True)
@@ -109,6 +117,27 @@ class HumanPlayer(Player):
             #si no lo es, jugamos la jugada
                 pos = int(col)
                 return (ColumnRecommendation(pos, None), None)
+
+
+class ReportingPlayer(Player):
+
+    def on_loose(self):
+        """
+        Avisa al oraculo que su última recomendacion ha sido mala 
+        """
+        board_code = self.last_move.board_code
+        position = self.last_move.position
+        self._oracle.update_to_bad(baord_code, self, position)
+
+
+
+
+
+
+
+
+
+
 
 #funciones que validan la entrada del humano
 

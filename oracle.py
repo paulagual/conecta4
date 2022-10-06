@@ -36,15 +36,15 @@ class BaseOracle():
     def __init__(self):
         pass
     
-    def get_recommedation(self, board, player):
+    def get_recommendation(self, board, player):
         """
-        Devuelve una lista de ColumnRecommedations
+        Devuelve una lista de ColumnRecommendations
         """
-        recommedation = []
+        recommendation = []
         for i in range(len(board)):
-            recommedation.append(self._get_column_recommendation(board, i, player))
+            recommendation.append(self._get_column_recommendation(board, i, player))
 
-        return recommedation
+        return recommendation
 
     def _get_column_recommendation(self, board, index, player):
         """
@@ -126,17 +126,34 @@ class MemoizingOracle(SmartOracle):
         super().__init__()
         self._past_recommentations = {}
 
-    def _make_key(self, board, player):
-        return f'{board.as_code().raw_code}@{player.char}'
+    def _make_key(self, board_code, player):
+        return f'{board_code.raw_code}@{player.char}'
 
-    def get_recommedation(self, board, player):
+    def get_recommendation(self, board, player):
 
         #Creamos la clave
-        key = self._make_key(board,player)
+        key = self._make_key(board.as_code(),player)
 
         #Miramos en el cache; si no esta calculo y lo guardo
         if key not in self._past_recommentations:
-            self._past_recommentations[key] = super().get_recommedation(board, player)
+            self._past_recommentations[key] = super().get_recommendation(board, player)
 
         #Devuelvo lo que está en caché
         return self._past_recommentations[key]
+
+class LearningOracle(MemoizingOracle):
+    
+    
+    def update_to_bad(self, board_code, player, position):
+        #crear clave
+        key = self._make_key(board_code, player)
+
+        #obtener la clasificacion erronea
+        recommendation = self.get_recommendation(SquareBoard.fromCode(board_code), player)
+
+        #corregirla
+        recomendation[position] = ColumnRecommendation(position, ColumnClassification.BAD)
+
+        #substituirla
+
+        self._past_recommentations[key] = recommendation

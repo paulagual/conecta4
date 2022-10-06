@@ -4,10 +4,10 @@ from beautifultable import BeautifulTable
 from enum import Enum, auto
 
 from match import Match
-from player import Player, HumanPlayer
+from player import Player, HumanPlayer, ReportingPlayer
 from square_board import SquareBoard
 from list_utils import reverse_matrix
-from oracle import SmartOracle, BaseOracle, MemoizingOracle
+from oracle import SmartOracle, BaseOracle, MemoizingOracle, LearningOracle
 from settings import BOARD_LENGTH
 
 class RoundType(Enum):
@@ -21,7 +21,7 @@ class DifficultyLevel(Enum):
 
 class Game():    
 
-    def __init__(self, round_type = RoundType.COMPUTER_VS_COMPUTER, match = Match(Player('Chip'), Player('Chop'))):
+    def __init__(self, round_type = RoundType.COMPUTER_VS_COMPUTER, match = Match(ReportingPlayer('Chip'), ReportingPlayer('Chop'))):
         self.round_type = round_type
         self.match = match
         self.board = SquareBoard()
@@ -75,7 +75,7 @@ class Game():
         """ 
         Imprimir el movimiento del jugador
         """
-        print(f"El jugador {player.name} ha jugado con el char {player.char} en la columna {player.last_move}")
+        print(f"El jugador {player.name} ha jugado con el char {player.char} en la columna {player.last_move.position}")
 
     def display_board(self):
         """
@@ -181,15 +181,15 @@ class Game():
         """
         _levels = {DifficultyLevel.EASY: BaseOracle(),
                    DifficultyLevel.MEDIUM: SmartOracle(),
-                   DifficultyLevel.HARD: MemoizingOracle()}
+                   DifficultyLevel.HARD: LearningOracle()}
 
         if self.round_type == RoundType.COMPUTER_VS_COMPUTER:
             #ambos jugadores roboticos
-            player1 = Player('T-X', oracle=SmartOracle())
-            player2 = Player('T-O', oracle=SmartOracle())
+            player1 = ReportingPlayer('T-X', oracle=LearningOracle())
+            player2 = ReportingPlayer('T-O', oracle=LearningOracle())
         else:
             #jugador 1 robotico, jugador 2 humano
-            player1 = Player('T-X', oracle=_levels[self._dificulty_level])
+            player1 = ReportingPlayer('T-X', oracle=_levels[self._dificulty_level])
             player2 = HumanPlayer(name = input("¿Cuál es tu nombre? "))
 
         return Match(player1, player2)
