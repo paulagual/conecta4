@@ -1,6 +1,7 @@
 from settings import BOARD_LENGTH, VICTORY_STRIKE
 from linear_board import *
 from list_utils import *
+from string_utils import *
 
 class SquareBoard():
     """
@@ -14,6 +15,24 @@ class SquareBoard():
         board = cls()
         board._columns = list(map(lambda element: LinearBoard().fromList(element), list_of_lists))
         return board
+    
+    @classmethod
+    def fromBoardCode(cls, board_code):
+        return cls.fromBoardRawCode(board_code.raw_code)
+
+    @classmethod
+    def fromBoardRawCode(cls, board_raw_code):
+        #convertir la cadena del codigo en una lista de cadenas
+        list_of_strings = board_raw_code.split('|')
+
+        #transformar cada cadena en una lista de caracteres
+        matrix = explode_list_of_strings(list_of_strings)
+
+        #cambianos todos los . por None
+        matrix = replace_all_in_matrix(matrix,'.',None)
+
+        #transformamos la lista en SquareBoard
+        return cls.fromList(matrix)
 
     def __init__(self):
         self._columns = [LinearBoard() for i in range(BOARD_LENGTH)] 
@@ -23,6 +42,12 @@ class SquareBoard():
         Devuelve una representación de self en formato de matriz, lista de listas
         """
         return list(map(lambda x: x._column, self._columns))
+
+    def as_code(self):
+        """
+        Convierte un SquareBoard a code
+        """
+        return BoardCode(self)
 
     def add(self, char, column):
         """
@@ -86,6 +111,8 @@ class SquareBoard():
         d = displace_matrix(m)
         tmp = SquareBoard.fromList(d)
         return tmp._any_horizontal_victory(char)
+    
+
 
     # dunders
 
@@ -105,4 +132,27 @@ class SquareBoard():
 
     def __hash__(self):
         return hash(self._columns)
-        
+
+class BoardCode:
+    
+    def __init__(self,board):
+        self._raw_code = collapse_matrix(board.as_matrix())
+
+    @property
+    def raw_code(self):
+        return self._raw_code
+
+    # dunders
+    def __eq__(self, other):
+         #si son de clases distintas, son distintos
+        if not isinstance(other, self.__class__):
+            return False
+        #si son de la misma clase, compara sus elementos   
+        else:
+            return self.raw_code == other.raw_code
+
+    def __hash__(self):
+        return hash(self.raw_code)
+
+    def __repr__(self):
+        return f'{self.__class__}:{self.raw_code}'   

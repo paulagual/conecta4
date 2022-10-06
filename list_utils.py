@@ -121,13 +121,25 @@ def collapse_matrix(matrix, empty='.', separator='|'):
     return string[:-1]
 
 def explode_string(string):
-    ls = []
-    for char in string:
-        ls.append(char)
-    return ls
+    return list(string)
 
 def explode_list_of_strings(list_of_strings):
     matrix = []
     for string in list_of_strings:
         matrix.append(explode_string(string))
     return matrix
+
+def replace_all_in_list(ls,old,new):
+    result = []
+    for element in ls:
+        if element == old:
+            result.append(new)
+        else: #element != old
+            result.append(element)
+    return result
+
+def replace_all_in_matrix(matrix,old,new):
+    result = []
+    for ls in matrix:
+        result.append(replace_all_in_list(ls, old, new))
+    return result

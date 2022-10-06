@@ -59,3 +59,18 @@ def test_eq():
                               ['x', 'o', None, None,]])
 
     assert a == b
+
+def test_board_code():
+    board = SquareBoard.fromList([['x', 'o', None, None,],
+                              ['o', 'x', None, None,],
+                              ['x', 'o', 'x', 'o',],
+                              ['x', 'x', 'x', 'o',],
+                              ['x', 'o', None, None,]])
+
+    code = board.as_code()
+    
+    clone_board = SquareBoard.fromBoardCode(code)
+
+    assert clone_board == board
+    assert clone_board.as_code() == code
+    assert clone_board.as_code().raw_code == code.raw_code
