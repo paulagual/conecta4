@@ -5,7 +5,7 @@ from settings import BOARD_LENGTH
 
 class ColumnClassification(Enum):
     FULL    =  -1 #imposible de jugar
-    LOSE    =   1 #derrota casi asegurada
+    BAD     =   1 #derrota casi asegurada
     MAYBE   =  10 #puedes jugar, pero es indeseable
     WIN     = 100 #la mejor opción, gano seguro  
 
@@ -73,7 +73,7 @@ class SmartOracle(BaseOracle):
                 recommendation.classification = ColumnClassification.WIN
             #si no, busca si hay una jugada perdedora para evitarla
             elif self._is_losing_move(board, index, player):
-                recommendation.classification = ColumnClassification.LOSE
+                recommendation.classification = ColumnClassification.BAD
 
         return recommendation
 
