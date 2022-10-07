@@ -52,7 +52,7 @@ class Player():
     def on_win(self):
         pass
 
-    def on_loose(self):
+    def on_lose(self):
         pass
 
     def play_on(self, board, position, recommendations):
@@ -120,13 +120,11 @@ class HumanPlayer(Player):
 
 class ReportingPlayer(Player):
 
-    def on_loose(self):
+    def on_lose(self):
         """
-        Avisa al oraculo que su última recomendacion ha sido mala 
+        Le pide al oráculo que revise sus recomendaciones
         """
-        board_code = self.last_moves.board_code
-        position = self.last_moves.position
-        self._oracle.update_to_bad(baord_code, self, position)
+        self._oracle.backtrack(self.last_moves)
 
 
 

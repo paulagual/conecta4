@@ -113,8 +113,15 @@ class Game():
         Verifica si el juego ha terminado: hay una victoria o un empate (el tablero lleno)
         """
         winner = self.match.get_winner(self.board) #un vencedor 'x' o 'o' o si no lo hay None
+        game_over = False
+        if winner != None:
+            winner.on_win()
+            winner.opponent.on_lose()
+            game_over = True
+        elif self.board.is_full():
+            game_over = True
 
-        return (winner != None) or (self.board.is_full())
+        return game_over
 
     def _configure_by_user(self):
         """ 

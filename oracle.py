@@ -73,7 +73,12 @@ class BaseOracle():
                 break
         return result
 
+    #métodos para ser sobreescritos por mis subclases
+    def update_to_bad(self, move):
+        pass
 
+    def backtrack(self, list_of_moves):
+        pass
 
 class SmartOracle(BaseOracle):
     
@@ -161,17 +166,34 @@ class MemoizingOracle(SmartOracle):
 
 class LearningOracle(MemoizingOracle):
     
-    
-    def update_to_bad(self, board_code, player, position):
+    def update_to_bad(self, move):
         #crear clave
-        key = self._make_key(board_code, player)
+        key = self._make_key(move.board_code, move.player)
 
         #obtener la clasificacion erronea
-        recommendation = self.get_recommendation(SquareBoard.fromCode(board_code), player)
+        recommendation = self.get_recommendation(SquareBoard.fromBoardCode(move.board_code), move.player)
 
         #corregirla
-        recomendation[position] = ColumnRecommendation(position, ColumnClassification.BAD)
+        recommendation[move.position] = ColumnRecommendation(move.position, ColumnClassification.BAD)
 
         #substituirla
-
         self._past_recommentations[key] = recommendation
+
+    def backtrack(self, list_of_moves):
+        """ 
+        Repasa todas las jugadas y si hay alguna esta todo perdido, la anterior se actualiza a BAD
+        """
+        # moves en orden inverso
+        print('Learning...')
+        # por cada move...
+        for move in list_of_moves:
+            # reclasifico a bad
+            self.update_to_bad(move)
+
+            # miro si todo ya estaba perdido
+            board = SquareBoard.fromBoardCode(move.board_code)
+            
+            if not self.no_good_options(board, move.player):
+                # si no todo estaba perdido salgo
+                break
+        print(f'Size of kowledge base: {len(self._past_recommentations)}')
