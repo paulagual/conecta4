@@ -15,7 +15,7 @@ class Player():
         self.char = char
         self._oracle = oracle
         self.opponent = opponent
-        self.last_move = None
+        self.last_moves = []
 
     @property
     def opponent(self):
@@ -62,9 +62,8 @@ class Player():
         #jugar en la columna 
         board.add(self.char, position)
 
-        #guardo la última jugada
-        self.last_move = Move(position, board.as_code(), recommendations, self)
-        
+        #guardo la última jugada siempre al principio de la lista
+        self.last_moves.insert(0, Move(position, board.as_code(), recommendations, self))
 
     def _choose(self, recommendations):
         #quitamos las columnas no válidas
@@ -125,8 +124,8 @@ class ReportingPlayer(Player):
         """
         Avisa al oraculo que su última recomendacion ha sido mala 
         """
-        board_code = self.last_move.board_code
-        position = self.last_move.position
+        board_code = self.last_moves.board_code
+        position = self.last_moves.position
         self._oracle.update_to_bad(baord_code, self, position)
 
 

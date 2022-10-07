@@ -75,7 +75,7 @@ class Game():
         """ 
         Imprimir el movimiento del jugador
         """
-        print(f"El jugador {player.name} ha jugado con el char {player.char} en la columna {player.last_move.position}")
+        print(f"El jugador {player.name} ha jugado con el char {player.char} en la columna {player.last_moves[0].position}")
 
     def display_board(self):
         """
