@@ -5,6 +5,7 @@ from oracle import *
 from square_board import *
 from linear_board import *
 from list_utils import all_same
+from settings import *
 import random
 
 
@@ -59,6 +60,10 @@ class Player():
         """
         Juega en la posición indicada
         """
+        #imprimo recomendaciones si DEBUG on
+        if DEBUG:
+            self.display_recommendations(board)
+
         #jugar en la columna 
         board.add(self.char, position)
 
@@ -78,7 +83,25 @@ class Player():
             #si no lo son, cojo la primera que será la mejor
         else:
             return valid[0]
+    
+    def display_recommendations(self, board):
+        #
+        print(f'-------- DEBUG MODE ON --------')
+        print(f'Robotic Player Recommendations')
+        #create a beautiful table
+        bt_rec = BeautifulTable()
 
+        #añadir las recomendaciones
+        for i in range(BOARD_LENGTH):
+                    recomendation = self._oracle._get_column_recommendation(board, i, self.opponent)
+                    bt_rec.columns.append([recomendation])
+                
+        #poner el header
+        bt_rec.columns.header = [str(i) for i in range(BOARD_LENGTH)]    
+
+        #imprimirla
+        print(bt_rec)
+        print(f'-------- DEBUG MODE ON --------')
 class HumanPlayer(Player):
 
     def __init__(self, name, player = None):
