@@ -80,7 +80,7 @@ class Game():
         """ 
         Imprimir el movimiento del jugador
         """
-        print(f"El jugador {player.name} ha jugado con el char {player.char} en la columna {player.last_moves[0].position}")
+        print(f"\n El jugador {player.name} ha jugado con el char {player.char} en la columna {player.last_moves[0].position}")
 
     def display_board(self):
         """
@@ -109,9 +109,9 @@ class Game():
         """
         winner = self.match.get_winner(self.board)
         if winner != None:
-            print(f"El ganador es {winner.name} que juega con la ficha {winner.char}")
+            print(f"\n El ganador es {winner.name} que juega con la ficha {winner.char}")
         else:
-            print(f"/n Hay un empate")
+            print(f"\n Hay un empate")
 
     def _has_winner_or_tie(self):
         """ 
