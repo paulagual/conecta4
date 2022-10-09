@@ -38,9 +38,9 @@ def test_game_over():
                                     [None, None, None, None,]])  
     
 
-    assert x_victory._is_game_over()
-    assert o_victory._is_game_over() 
-    assert full._is_game_over() 
-    assert not_over._is_game_over() == False
+    assert x_victory._has_winner_or_tie()
+    assert o_victory._has_winner_or_tie() 
+    assert full._has_winner_or_tie() 
+    assert not_over._has_winner_or_tie() == False
 
     

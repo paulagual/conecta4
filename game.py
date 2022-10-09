@@ -66,10 +66,15 @@ class Game():
             self.display_board()
 
             #si el juego ha terminado == si hay una victoria
-            if self._is_game_over() :
+            if self._has_winner_or_tie() :
                 #muestro el resultado final
                 self.display_result()
-                break
+
+                if self.match.is_match_over():
+                    break
+                else:
+                    self.board = SquareBoard()
+                    self.display_board()
 
     def display_move(self, player):
         """ 
@@ -108,7 +113,7 @@ class Game():
         else:
             print(f"/n Hay un empate")
 
-    def _is_game_over(self):
+    def _has_winner_or_tie(self):
         """ 
         Verifica si el juego ha terminado: hay una victoria o un empate (el tablero lleno)
         """

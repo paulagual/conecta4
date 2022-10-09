@@ -29,3 +29,22 @@ class Match():
             return self.get_player('o')
         else:
             return None
+
+    def is_match_over(self):
+        """
+        Pregunta al usuario si quiere volver a jugar 
+        """
+        result = True
+
+        while True:
+            answer = input('Would you like to play again? (Y/N)').upper()
+            if answer == 'Y':
+                result = False
+                break
+            elif answer == 'N':
+                result = True
+                break
+        
+        return result
+    
+    
